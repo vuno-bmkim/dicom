@@ -1,35 +1,55 @@
-# DICOM (작성중)
-# 1. 개요
-* Digital Imaging and Communications in Medicine (의료용 디지털 영상 및 통신 표준)
-* 방사선 촬영, 초음파 검사, CT촬영, MRI촬영 등 다양한 의료용 영상 촬영 기기가 개발되고, 이렇게 획득한 영상의 활용이 다양해짐 
-  * PACS (Picture Archiving and Communication System, 의료영상 저장전송시스템) : 의료용 영상을 저장 및 전송하고 관리하는 솔루션
-* 이에 따라 제조업체/영상종류 등에 무관하게 의료용 영상을 통합하여 저장/관리/조회/가공/통신하기 위한 “표준 포맷"이 필요해짐
-* 1985년에 최초 표준인 ACR/NEMA 300이 출시되었고, 수정을 거쳐 1993년에 출시된 버젼부터 DICOM이라는 이름으로 사용됨 
-* DICOM 표준을 따르는 파일의 확장자는 .dcm 
-# 2. DICOM 포맷
-* DICOM 파일은 "File meta information header"와 "Information object"로 구성됨
-* File meta information header
-  * File Preamble (128byte)
-    * 특별한 사용이나 application profile을 위하여 사용될 수 있음. 
-  * DICOM prefix (4byte)
-    * 해당 파일이 DICOM 파일임을 표시하기 위해, File preamble 뒤에 4byte로 "DICM"을 표시 (44 49 43 4D)
-  * File Meta elements
-    * Data Element (Tag (4byte) + Value Representation (2byte) + Value length (2 or 4byte) + Value Field) 의 모음으로 구성됨 
-    * Tag (4 bytes)
-      * Group number (2 bytes) + element number (2 bytes) 로 구성됨 
-      * 해당 Tag는 특정 Attribute를 지시하며, 각 Attribute는 특정 Information Entity, 특정 Module에 속함.
-    * VR (Value Representation)
-      * 각 Tag가 지시하는 Attribute값의 타입
-* Information object
-  * 이미지/영상 데이터
+# 1. DICOM이란?
+- Digital Imaging and Communications in Medicine (DICOM)은 의료용 디지털 영상의 저장, 출력 및 전송에 사용 되는 여러가지 표준을 총칭하는 말이다.
+- DICOM 표준을 따르는 파일의 확장자는 .dcm이다.
+
+# 2. DICOM의 필요성
+- X-ray 촬영, 초음파 검사, CT 촬영, MRI 촬영 등 다양한 의료용 디지털 영상 촬영 장비가 개발됨에 따라 각 장비에서 촬영한 영상을 효율적으로 통합하여 관리 및 조회할 필요가 생겼고, 서로 다른 제조사 간의 호환성 문제가 대두되었다. 예를 들어 어떠한 워드 프로세서(MS워드, Mac Pages, 한글 등)로 글을 작성 하더라도 pdf포맷으로 저장하면, 하나의 pdf 뷰어로 관리 및 조회할 수 있다. 이처럼 다양한 제조사 장비와 다양한 종류의 영상 간의 호환을 위한 표준이 필요했다.
+예를 들어 어떠한 워드 프로세서(MS워드, Mac Pages, 한글 등)로 글을 작성 하더라도 pdf포맷으로 저장하면, 하나의 pdf 뷰어로 관리 및 조회할 수 있다. 이처럼 다양한 제조사 장비와 다양한 종류의 영상 간의 호환을 위한 표준이 필요했다.
+- 한편 의료 영상은 일반적인 영상과 달리 환자 정보, 검사 정보 등 의료 영상으로서 효과적으로 사용하기 위해 영상 자체 정보 외에 고유한 정보들을 함께 저장해야 한다. 또한 촬영 장비, OCS(처방전달시스템), PACS(의료영상저장전송시스템), 아카이브, 프린터 등 의료 영상과 관련한 다양한 장비들 간의 통신을 위해서는 네트워크 프로토콜도 필요하다. 이러한 목적을 위해 새롭게 개발된 표준이 DICOM이다. 
+
+# 3. DICOM의 역사
+- DICOM은 ACR(American College of Radiology)와 NEMA(National Electrical Manufacture Association)에 의해 개발되었다.
+- 1985년 첫번째 표준이 ACR/NEMA 300라는 이름으로 출시 되었으며, 지속적인 수정을 거쳐 1993년에 출시된 버젼부터 DICOM이라는 이름으로 명명 되었고, 현재까지도 지속적으로 수정되고 있다.
+
+# 4. DICOM File
+- 환자의 신상 정보, 수행한 검사 정보, 영상 자체의 정보 등 '의료용 영상 파일" 데이터를 규정하기 위해 필요한 다양한 속성들이 있다. 이러한 속성들을 "attribute"라 하며, 수천 개 가량이 존재하고 (참고 : [NEMA DICOM 표준 문서 - Part 6.Data Dictionary](http://dicom.nema.org/Dicom/2011/11_06pu.pdf)) 각각은 아래 4가지 사항으로 정의된다.
+    - Attribute Name : 속성 이름
+    - Tag : 시스템이 해당 속성을 식별하는 용도로 사용하는 4byte로 표현된 값
+    - Type : 속성 입력 필수/선택 여부
+    - Attribute description : 해당 속성에 대한 상세한 설명
+![figure1](./image/figure1.png)
+- 수천 개 가량의 attribute는 연관성에 따라 소분류인 "module", 대분류인 "Information Entities(IE)"로 분류된다. (ex: Multi-frame 이미지의 프레임 개수를 나타내는 "Number of Frames" attribute는 "Multi-frame" module에 속하며, 이 모듈은 "Image" IE에 속한다.)
+- 한편 CT Image, MR Image, Digital X-Ray Image 등 영상의 종류에 따라 데이터를 규정하기 위해 필요한 attribute들이 다를 수 있는데, 이에 따라 각 영상의 종류는 "IOD(Inofrmation Object Definition)"라는 것으로 정의되고 각 IOD마다 필요한 attribute들이 각각 정의되어 있다. 
+![figure2](./image/figure2.png)
+(Fig 2. US Multi-frame IOD를 구성하는 모듈들과 그 중 Multi-frame모듈에 속하는 Attribute들 (출처: [DICOM Standard Browser by Innolitics](https://dicom.innolitics.com/ciods))
+- DICOM 파일은 아래와 같이 구성되어 있다. File Preamble은 특별한 사용이나 application profile을 위해 사용될 수 있으며, 128 byte File Preamble 다음 4Byte는 DICOM파일이라는 것을 표시하기 위한 DICOM Prefix가 저장된다.
+  - File Preamble (128byte) : 특별한 사용이나 application profile을 위해 사용될 수 있음
+  - DICOM prefix (4byte) : File Preamble 다음에 나오는 prefix로 해당 파일이 DICOM이라는 것을 명시함
+  - File Meta elements : 파일에 대한 Attribute를 Data element의 모음으로 나타냄 
+  - Information object : 이미지/영상 데이터 
+![figure3](./image/figure3.png)
+(Fig 3. (출처: [DICOM Cookbook 번역본 - CGAC 연구실](http://cgac.chungbuk.ac.kr/Uploads/LECTURE/DICOM-COOKBOOk.doc))
+- 앞서 언급한 File Meta elements 부분은 아래와 같은 방식으로 구성되는데, 각 Data element마다 순서대로 Attribute 값이 저장되며 각 Data element는 아래 4가지 사항으로 구성된다.
+    - Tag (4byte) : 앞서 정의된 Attribute의 Tag로 어떠한 속성 인지를 뜻한다. group number(2byte)와 element number(2byte)로 구성된다.
+    - VR (Value Representation) (2byte) :  속성 값의 타입을 뜻한다.  [NEMA DICOM 표준 문서 - Part 5.Data Structures and Encoding - Sec 6.2 Value Representation (VR)](http://dicom.nema.org/Dicom/2013/output/chtml/part05/sect_6.2.html) 에 각 타입들이 정의되어 있다.
+    - Value Length (2 or 4byte) : 해당 속성 Value Field의 길이를 뜻한다.
+    - Value Field : 해당 속성에 실제로 담긴 내용이다.
+![figure4](./image/figure4.png)
+(Fig 4. (출처: [DICOM Cookbook 번역본 - CGAC 연구실](http://cgac.chungbuk.ac.kr/Uploads/LECTURE/DICOM-COOKBOOk.doc))
+- 아래는 https://medistim.com/dicom/에서 제공하는 예시 DICOM 파일을 뷰어로 확인한 경우와 hexdump한 경우를 비교한 것이다. 
 ![dicom_file_hexdump](./image/dicom_file_hexdump.png)
-# 3. 관련 링크 
+ 
+  
+# 5. DICOM Network
+- 작성중 
+
+# 6. 관련 링크 
 * https://en.wikipedia.org/wiki/DICOM
 * https://ko.wikipedia.org/wiki/의료용_디지털_영상_및_통신_표준
 * https://blog.naver.com/infinitt-healthcare/220902279599
 * https://ko.wikipedia.org/wiki/의료영상저장전송시스템
 * https://blog.naver.com/infinitt-healthcare/220885977992
 * http://cgac.chungbuk.ac.kr/Uploads/LECTURE/DICOM-COOKBOOk.doc
-* SOP Class UID : https://www.dicomlibrary.com/dicom/sop/
-* transfer syntax UID : https://www.dicomlibrary.com/dicom/transfer-syntax/
-
+* https://www.dicomlibrary.com/dicom/sop/
+* https://www.dicomlibrary.com/dicom/transfer-syntax/
+* https://dicom.innolitics.com/ciods
