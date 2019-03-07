@@ -28,22 +28,23 @@
   - File Meta elements : 파일에 대한 Attribute를 Data element의 모음으로 나타냄 
   - Information object : 이미지/영상 데이터 
 ![figure3](./image/figure3.png)
-(Fig 3. DICOM 파일 구성 이미지 (출처: [DICOM Cookbook 번역본 - CGAC 연구실](http://cgac.chungbuk.ac.kr/Uploads/LECTURE/DICOM-COOKBOOk.doc))
-- DICOM 파일 구성 중 File Meta elements 부분은 아래와 같은 방식으로 구성되는데, 각 Data element마다 순서대로 Attribute 값이 저장되며 각 Data element는 아래 4가지 사항으로 구성된다.
-    - Tag (4byte) : 앞서 정의된 Attribute의 Tag로 어떠한 속성 인지를 뜻한다. group number(2byte)와 element number(2byte)로 구성된다.
-    - VR (Value Representation) (2byte) :  속성 값의 타입을 뜻한다.  [NEMA DICOM 표준 문서 - Part 5.Data Structures and Encoding - Sec 6.2 Value Representation (VR)](http://dicom.nema.org/Dicom/2013/output/chtml/part05/sect_6.2.html) 에 각 타입들이 정의되어 있다.
-    - Value Length (2 or 4byte) : 해당 속성 Value Field의 길이를 뜻한다.
-    - Value Field : 해당 속성에 실제로 담긴 내용이다.
+(Fig 3. DICOM 파일 구성 이미지 (출처: [DICOM Cookbook 번역본](http://cgac.chungbuk.ac.kr/Uploads/LECTURE/DICOM-COOKBOOk.doc))
+- DICOM 파일 구성 중 File Meta elements 부분은 아래와 같은 방식으로 구성되는데, 각 data element마다 순서대로 attribute 정보가 저장되며 각 data element는 아래 4가지 사항으로 구성된다.
+    - Tag (4byte) : 앞서 정의된 attribute의 tag로 어떠한 attribute인지를 명시
+    - VR (Value Representation) (2byte) :  속성 값의 타입을 명시 (VR 리스트 : [NEMA DICOM 표준 문서 - Part 5.Data Structures and Encoding](http://dicom.nema.org/Dicom/2013/output/chtml/part05/sect_6.2.html))
+    - Value Length (2 or 4byte) : Value Field의 길이를 명시
+    - Value Field : 해당 attribute에 대해 실제로 담긴 정보 
 ![figure4](./image/figure4.png)
-(Fig 4. File Meta elements 부분 구성 이미지 (출처: [DICOM Cookbook 번역본 - CGAC 연구실](http://cgac.chungbuk.ac.kr/Uploads/LECTURE/DICOM-COOKBOOk.doc))
-- 아래는 https://medistim.com/dicom/에서 제공하는 예시 DICOM 파일을 뷰어로 확인한 경우와 hexdump한 경우를 비교한 것이다. 
+(Fig 4. File Meta elements 부분 구성 이미지 (출처: [DICOM Cookbook 번역본](http://cgac.chungbuk.ac.kr/Uploads/LECTURE/DICOM-COOKBOOk.doc))
+- 아래는 https://medistim.com/dicom/ 에서 제공하는 예시 DICOM 파일을 뷰어로 확인한 경우와 hexdump한 경우를 비교한 것이다. 
 ![dicom_file_hexdump](./image/dicom_file_hexdump.png)
+(Fig 5. 예시 DICOM 파일 뷰어 이미지와 hexdump)
  
   
 # 5. DICOM Network
 - 작성중 
 
-# 6. 관련 링크 
+# 6. 참고 링크 
 * https://en.wikipedia.org/wiki/DICOM
 * https://ko.wikipedia.org/wiki/의료용_디지털_영상_및_통신_표준
 * https://blog.naver.com/infinitt-healthcare/220902279599
