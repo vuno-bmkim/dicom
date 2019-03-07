@@ -42,7 +42,7 @@
  
   
 # 5. DICOM Network
-- 작성중 
+- pydicom 후에 정리 예정
 
 # 6. 참고 링크 
 * https://en.wikipedia.org/wiki/DICOM
