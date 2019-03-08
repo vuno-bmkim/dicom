@@ -43,6 +43,7 @@
   
 # 5. DICOM Network
 - pydicom 후에 정리 예정
+- 보안이슈 (HTTP, HTTPS 등과 비교)
 
 # 6. 참고 링크 
 * https://en.wikipedia.org/wiki/DICOM
