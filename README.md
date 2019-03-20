@@ -42,8 +42,10 @@
  
   
 # 5. DICOM Network
-- pydicom 후에 정리 예정
-- 보안이슈 (HTTP, HTTPS 등과 비교)
+- Server/Client 모델로 동작하며 Server역할 (요청을 대기하며 요청에 대해 응답)을 하는 것을 SCP (Server Class Provider)라 하고, Client 역할 (파일 전송, 탐색, 복사 등 특정한 행동을 서버에 요청)을 하는 것을 SCU (Server Class User)라 한다. SCP/SCU 등 통신의 대상이 되는 단위를 AE (Application Entity)라 한다. 1개의 장비가 SCP/SCU를 동시에 수행할 수 있다. 
+- Storage Service Class : 촬영 영상장비 등(SCU역할)이 DICOM 파일을 워크스테이션 또는 아카이브 등(SCP 역할)에 전송하여 저장하는 서비스로 DICOM 서비스 중 가장 기본적이며 많이 사용되는 서비스이다. SCU가 SCP에게 C-STORE 요청 메시지를 보내고 SCP가 받은 후에 응답 메시지를 보낸다. 
+- Query/Retrieve Service Class : SCU가 특정한 필터 조건으로 SCP에 저장된 많은 DICOM 파일들을 검색 (C-FIND), 검색 조건에 맞는 파일을 SCU에 가져오기(C-GET), 검색 조건에 맞는 파일을 다른 SCP로 전송 (C-MOVE) 시키는데 사용되는 서비스이다.
+
 
 # 6. 참고 링크 
 * https://en.wikipedia.org/wiki/DICOM
